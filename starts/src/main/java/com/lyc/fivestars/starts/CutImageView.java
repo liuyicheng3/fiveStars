@@ -6,13 +6,17 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.wifi.WifiManager;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 
 /**
  * Created by lyc on 14-10-19.
  */
-public class CutImageView extends View {
+public class CutImageView extends View implements GestureDetector.OnGestureListener {
     int full_wide,full_height;
     int starWide=0,headerWide,footerWide,speratorWide=0;
     double star=0.1;
@@ -21,6 +25,64 @@ public class CutImageView extends View {
     BitmapDrawable  bd_on,bd_off;
     Paint paint;
     Context ctx;
+    private GestureDetector gestureDetector;
+
+    private void init(){
+        this.gestureDetector = new GestureDetector(ctx, this);
+    }
+
+    @Override
+    public boolean onDown(MotionEvent motionEvent) {
+        return true;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent motionEvent) {
+
+    }
+    /**
+     * 根据手机的分辨率从 dp 的单位 转成为 px(像素)
+     */
+    public int dip2px(Context context, float dpValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
+
+
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent motionEvent) {
+        float x= motionEvent.getX();
+        int  trueWidth=dip2px(ctx,starWide);
+        star =x/ trueWidth;
+        Log.e("lyc","X:"+x+" startWidth"+starWide+"currentPosition"+star);
+        invalidate();
+
+        return true;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent motionEvent) {
+
+    }
+
+    @Override
+    public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+        return false;
+    }
+
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        gestureDetector.onTouchEvent(event);
+        return true;
+    }
+
     public enum Position{UP,Middle,bottom};
     Position position=Position.Middle;
 
@@ -28,6 +90,7 @@ public class CutImageView extends View {
         super(context, attrs);
         paint=new Paint();
         ctx=context;
+        init();
     }
 
     public void setPosition(Position position) {
@@ -63,6 +126,7 @@ public class CutImageView extends View {
         super(context, attrs, defStyle);
         paint=new Paint();
         ctx=context;
+        init();
     }
 
     public void setStar(double star){
@@ -74,6 +138,7 @@ public class CutImageView extends View {
         super(context);
         paint=new Paint();
         ctx=context;
+        init();
     }
 
     @Override

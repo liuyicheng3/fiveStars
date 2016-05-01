@@ -24,8 +24,9 @@ public class MainActivity extends ActionBarActivity {
             fiveStars.setStar(ds[j]);
             ll_content.addView(fiveStars);
             ViewGroup.LayoutParams lp=fiveStars.getLayoutParams();
-            lp.width=200;
-            lp.height=100;
+            lp.width= android.support.v7.app.ActionBar.LayoutParams.MATCH_PARENT;
+            lp.height=200;
+            fiveStars.setStarWide(80);
             fiveStars.setLayoutParams(lp);
             fiveStars.setPosition(CutImageView.Position.bottom);
         }

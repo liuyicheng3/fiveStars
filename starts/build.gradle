@@ -1,11 +1,10 @@
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "19.0.3"
+    buildToolsVersion "23.0.2"
 
     defaultConfig {
-        packageName "com.lyc.fivestars.starts"
         minSdkVersion 8
         targetSdkVersion 19
         versionCode 1
@@ -13,7 +12,6 @@ android {
     }
     buildTypes {
         release {
-            runProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -22,6 +20,5 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:19.+'
-    compile 'com.android.support:appcompat-v7:19.+'
-    compile 'com.android.support:appcompat-v7:19.+'
+
 }
